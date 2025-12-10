@@ -211,3 +211,4 @@ __marimo__/
 chroma_db/
 imgs/
 data/
+.langgraph_api/
