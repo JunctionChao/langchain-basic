@@ -1,0 +1,58 @@
+# pip install tavily-python langchain-tavily
+from langchain.agents import create_agent
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+import os
+from tavily import TavilyClient
+from typing import Literal
+
+
+load_dotenv()
+
+tavilyClient = TavilyClient()
+
+def internet_search(
+    query: str,
+    max_results: int = 3,
+    topic: Literal["general", "news", "finance"] = "general",
+    include_raw_content: bool = False,
+):
+    """Run a web search"""
+    return tavilyClient.search(
+        query,
+        max_results=max_results,
+        include_raw_content=include_raw_content,
+        topic=topic,
+    )
+
+# System prompt to steer the agent to be an expert researcher
+research_instructions = """
+你是一个专业的研究员。你的任务是进行彻底的研究并撰写一份完整的报告。
+    
+你可以使用以下工具：
+- internet_search: 用于搜索互联网信息
+    
+请确保：
+1. 进行全面的搜索来收集信息
+2. 验证信息的准确性
+3. 组织信息并撰写结构化的报告
+"""
+
+agent = create_agent(
+    model=ChatOpenAI(
+        model_name=os.getenv("LLM_MODEL_ID"),
+        api_key=os.getenv("LLM_API_KEY"),
+        base_url=os.getenv("LLM_BASE_URL"),
+        temperature=0.3, timeout=30, max_tokens=96e3, max_retries=5
+    ),
+    tools=[internet_search],
+    system_prompt=research_instructions
+)
+
+for event in agent.stream(
+    {"messages":[{"role": "user", 
+    "content": "什么是langgraph？详细介绍它的功能、用途和主要特点。"}]
+    },
+    stream_mode="values"
+):
+    event["messages"][-1].pretty_print()
