@@ -12,6 +12,7 @@ dependencies = [
     "langchain-community>=0.4.1",
     "langchain-openai>=1.1.0",
     "langchain-tavily>=0.2.13",
+    "langchainhub>=0.1.21",
     "langgraph-checkpoint-postgres>=3.0.1",
     "langgraph-cli[inmem]>=0.4.9",
     "pypdf>=6.4.0",
