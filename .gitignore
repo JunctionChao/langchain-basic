@@ -210,5 +210,5 @@ __marimo__/
 # local
 chroma_db/
 imgs/
-data/
+src/data/
 .langgraph_api/
