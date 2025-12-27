@@ -13,6 +13,16 @@
             "console": "internalConsole",
             "subProcess": false,
             "redirectOutput": true
+        },
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/all-in-rag/code/C4",
+            "program": "${file}",
+            "console": "internalConsole",
+            "subProcess": false,
+            "redirectOutput": true
         }
     ]
 }
