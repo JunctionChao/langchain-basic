@@ -47,7 +47,7 @@ router_branch = RunnableBranch(
 )
 
 # 组合成完整路由链
-# 先并行执行两个操作：用 classifier_chain 为问题生成 topic，同时保留原始的 question
+# 先并行执行两个操作(字典代表并行)：用 classifier_chain 为问题生成 topic，同时保留原始的 question
 full_router_chain = {"topic": classifier_chain, "question": lambda x: x["question"]} | router_branch
 print("完整的路由链创建成功。\n")
 
